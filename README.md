@@ -68,39 +68,40 @@ As variáveis de ambiente deste projeto são:
     - A rota de auth (POST /auth): usada para gerar o token.
     - A rota de clientAdmin (POST /client/admin): 🚨 Esta rota foi criada exclusivamente para facilitar os testes, jamais deve ser utilizada em produção, pois seria uma falha de segurança. Como é necessário se ter autorização para as demais rotas, esta foi a forma encontrada de facilitar a criação de um único usuário ADMIN para seguir com os testes.
 
-1. Criar usuário admin (POST /client/admin), não é necessário passar nenhuma informação no corpo ou path da requisição. Ela irá criar um usuário com name "Admin" e email igual ao informado no arquivo .env.
-2. Autenticar usuário (POST /auth). Será retornado o token e as informações do usuário que se autenticou. Como o escopo não exigia senha, somente um e-mail existente é suficiente para se autenticar. O corpo da requisição deve ser no seguinte formato:
-```
+#### Fluxo de testes sugerido
+1. **Criar usuário admin** (POST /client/admin), não é necessário passar nenhuma informação no corpo ou path da requisição. Ela irá criar um usuário com name "Admin" e email igual ao informado no arquivo .env.
+2. **Autenticar usuário** (POST /auth). Será retornado o token e as informações do usuário que se autenticou. Como o escopo não exigia senha, somente um e-mail existente é suficiente para se autenticar. O corpo da requisição deve ser no seguinte formato:
+```json
 {
     "email": "${email}"
 }
 ```
-3. Nas demais requisições inserir o token no header como:
-```
+3. Nas demais requisições inserir o **token no Header** como:
+```json
 {
     "Authorization": "Bearer ${token}"
 }
 ```
-4. Criar um cliente (POST /client). Corpo JSON:
-```
+4. **Criar um cliente** (POST /client). Corpo JSON:
+```json
 {
     "name": "Teste",
     "email": "teste@teste.com"
 }
 ```
-5. Buscar um cliente (GET /client/:email). Onde :email é o email do Cliente.
-6. Editar um cliente (PUT /client/:idClient). Onde :idClient deve ser o Id retornado pelo Mongo na rota de buscar cliente. Este ID que representa qual o cliente terá seus dados alterados. Corpo JSON:
-```
+5. **Buscar um cliente** (GET /client/:email). Onde :email é o email do Cliente.
+6. **Editar um cliente** (PUT /client/:idClient). Onde :idClient deve ser o Id retornado pelo Mongo na rota de buscar cliente. Este ID que representa qual o cliente terá seus dados alterados. Corpo JSON:
+```json
 {
     "name": "Teste do teste",
     "email": "teste@teste.com"
 }
 ```
-7. Remover um cliente (DELETE /client/:idClient). Onde :idClient deve ser o Id retornado pelo Mongo na rota de buscar cliente. Este ID que representa qual o cliente será removido.
-8. Inserir um produto favorito (PUT /client/favoriteProduct/:productId). Onde :productId é o Identificador do produto que será inserido. 
+7. **Remover um cliente** (DELETE /client/:idClient). Onde :idClient deve ser o Id retornado pelo Mongo na rota de buscar cliente. Este ID que representa qual o cliente será removido.
+8. **Inserir um produto favorito** (PUT /client/favoriteProduct/:productId). Onde :productId é o Identificador do produto que será inserido. 
     * Nesta rota o Token de autenticação inserido no Header que indica as informações do usuário.
     * Caso queira inserir produtos favoritos a algum cliente X, deve-se autenticar e buscar o token para tal.
-9. Remover um produto favorito (DELETE /client/favoriteProduct/:productId). Onde :productId é o Identificador do produto que será inserido. 
+9. **Remover um produto favorito** (DELETE /client/favoriteProduct/:productId). Onde :productId é o Identificador do produto que será inserido. 
     * Nesta rota o Token de autenticação inserido no Header que indica as informações do usuário.
     * Caso queira remover produtos favoritos a algum cliente X, deve-se autenticar e buscar o token para tal.
 
