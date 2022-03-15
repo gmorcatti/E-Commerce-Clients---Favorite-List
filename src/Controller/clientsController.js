@@ -24,9 +24,22 @@ const removeFavoriteProductService = new RemoveFavoriteProductService({
     productsRepository,
 });
 
+const { ADMIN_EMAIL } = process.env;
+
 class ClientsController {
     async create(req, res) {
         const client = req.body;
+
+        const createdClient = await createClientService.handle(client);
+        
+        return res.status(201).send(createdClient);
+    }
+
+    async createAdmin(req, res) {
+        const client = {
+            name: 'Admin',
+            email: ADMIN_EMAIL
+        };
 
         const createdClient = await createClientService.handle(client);
         
@@ -60,9 +73,7 @@ class ClientsController {
 
     async insertFavoriteProduct(req, res) {
         const clientId = req.clientId;
-        const productId = req.body.productId;
-
-        console.log(clientId)
+        const productId = req.params.productId;
 
         const updatedInfo = await insertFavoriteProductService.handle(clientId, productId);
 
@@ -71,10 +82,8 @@ class ClientsController {
 
     async removeFavoriteProduct(req, res) {
         const clientId = req.clientId;
-        const productId = req.body.productId;
-
-        console.log(clientId)
-
+        const productId = req.params.productId;
+        
         const updatedInfo = await removeFavoriteProductService.handle(clientId, productId);
 
         return res.status(200).send(updatedInfo);

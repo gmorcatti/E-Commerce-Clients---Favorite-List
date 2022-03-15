@@ -14,7 +14,7 @@ class RemoveFavoriteProductService {
         if(!product) throw new AppError("Product doesn't exist.");
         
         const { favoriteProducts } = client[0];
-        console.log(favoriteProducts)
+        
         const productIsFavorite = favoriteProducts.some(product => product === productId);
         if(!productIsFavorite)
             throw new AppError("This Product is not favorite for this client.");

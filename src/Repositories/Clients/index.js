@@ -43,7 +43,7 @@ class ClientsRepository {
 
     updateFavoriteProductsList(clientId, favoriteProductsList) {
         return Client.updateOne(
-            { id: clientId }, 
+            { _id: clientId }, 
             { favoriteProducts: favoriteProductsList }
         );
     }

@@ -20,10 +20,10 @@ class InsertFavoriteProductService {
             throw new AppError("Product is already favorite for this client.");
 
         favoriteProducts.push(productId);
-        
+
         await this.clientsRepository.updateFavoriteProductsList(
-            clientId,
-            favoriteProducts
+        clientId,
+        favoriteProducts
         );
 
         return product;
