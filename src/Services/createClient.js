@@ -11,6 +11,9 @@ class CreateClientService {
             email: client.email,
         }
 
+        if(!client.name) throw new AppError('Inform the Client Name');
+        if(!client.email) throw new AppError('Inform the Client Email');
+
         const databaseClient = await this.clientsRepository.getByEmail(client.email);
 
         if(databaseClient[0]) throw new AppError('Client already exists.');

@@ -6,6 +6,8 @@ class GetClientByEmailService {
     }
 
     async handle(clientEmail) {
+        if(!clientEmail) throw new AppError('Inform the Client Email');
+
         const client = await this.clientsRepository.getByEmail(clientEmail);
 
         if(!client[0]) throw new AppError("Client doesn't exist.");

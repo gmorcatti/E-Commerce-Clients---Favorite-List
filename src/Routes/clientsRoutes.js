@@ -18,11 +18,12 @@ clientsRoutes.post('/admin', clientsController.createAdmin)
 
 clientsRoutes.use(authMiddleware.auth);
 
+clientsRoutes.put('/favoriteProduct/:productId', clientsController.insertFavoriteProduct)
+clientsRoutes.delete('/favoriteProduct/:productId', clientsController.removeFavoriteProduct)
+
 clientsRoutes.post('/', authMiddleware.authorizeAdmin, clientsController.create)
 clientsRoutes.put('/:id', authMiddleware.authorizeAdmin, clientsController.update)
 clientsRoutes.get('/:email', authMiddleware.authorizeAdmin, clientsController.getByEmail)
 clientsRoutes.delete('/:id', authMiddleware.authorizeAdmin, clientsController.remove)
-clientsRoutes.put('/favoriteProduct/:productId', clientsController.insertFavoriteProduct)
-clientsRoutes.delete('/favoriteProduct/:productId', clientsController.removeFavoriteProduct)
 
 export default clientsRoutes;

@@ -6,6 +6,8 @@ class RemoveClientService {
     }
 
     async handle(clientId) {
+        if(!clientId) throw new AppError('Inform the Client ID');
+        
         const clientIdIsValid = this.clientsRepository.isValidObjectId(clientId);
         if(!clientIdIsValid) throw new AppError('Please, Insert a valid Client Id.');
 
